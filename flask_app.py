@@ -50,7 +50,7 @@ def home():
     )
     return render_template('index.html', data=mpld3.fig_to_html(fig))
 
-@app.route('/yelp', methods=['POST'])
+@app.route('/yelp', methods=['POST', 'GET'])
 def yelp():
     if request.method == 'POST':
         if request.form:
@@ -58,7 +58,9 @@ def yelp():
             city = request.form['city']
             state = request.form['state']
             zipcode = request.form['zip']
-            print(address, city, state, zipcode)
+            final_add = address + city + state + zipcode
+            final_stuff = (api_helper.get_food_at_location(final_add)).json()
+            print(final_stuff)
             return render_template('yelp.html')
     else :
         return render_template('yelp.html')

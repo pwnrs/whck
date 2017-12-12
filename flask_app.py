@@ -33,13 +33,17 @@ def home():
     )
     return render_template('index.html', data=mpld3.fig_to_html(fig))
 
-if __name__ == '__main__':
-    app.run(debug=True)
-
-
-
-@app.route('/yelp')
+@app.route('/yelp', methods=['POST'])
 def yelp():
+    if request.form:
+        address = request.form['address']
+        city = request.form['city']
+        state = request.form['state']
+        zipcode = request.form['zip']
+        print(address, city, state, zipcode)
+
+
     return render_template('yelp.html')
+
 if __name__ == '__main__':
     app.run(debug=True)

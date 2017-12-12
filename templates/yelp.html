@@ -4,16 +4,53 @@
     <meta charset="utf-8">
     <title></title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/css/main.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   </head>
   <body>
-      
-    <form method="POST">
-      <input type="text" name="address" value="" placeholder="address">
-      <input type="text" name="city" value="" placeholder="city">
-      <input type="text" name="state" value="" placeholder="state" required>
-      <input type="text" name="zip" value="" placeholder="zip">
-      <input type="submit" name="" value="Find a Restaurant">
-    </form>
+
+      <div class="wide">
+      	<div class="col-xs-5 line"><hr></div>
+        <!--<div class="col-xs-2 logo">Logo</div>-->
+        <div class="col-xs-5 line"><hr></div>
+    </div>
+
+
+      <center>
+          <div class="container">
+              <div class="">
+                  <h1 class="display-1 head">Yelp@Me</h1>
+
+                  <h3 class="display-5">Search@Me</h3>
+                  <form method="POST" class="">
+                      <div class="form-group">
+                          <input type="text" class="form-control" name="address" value="" placeholder="address">
+                      </div>
+
+                      <div class="form-group">
+                          <input type="text" class="form-control" name="city" value="" placeholder="city">
+                      </div>
+
+                      <div class="form-group">
+                          <input type="text" class="form-control" name="state" value="" placeholder="state" required>
+                      </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="zip" value="" placeholder="zip">
+                    </div>
+
+
+                    <input type="submit" class="btn btn-primary" name="" value="Find a Restaurant">
+                  </form>
+
+              </div>
+
+
+
+          </div>
+      </center>
+
+
+
   </body>
 </html>

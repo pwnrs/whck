@@ -33,3 +33,29 @@
   overflow:hidden;
   text-align:center;
 }
+
+/*img {
+    height: 10em;
+    width: 10em;
+    border-radius: .5em;
+}*/
+
+
+img {
+    /*float: left;
+    margin-right: 10px;
+    display: block;*/
+    height: 8em;
+    width: 8em;
+}
+
+/*.box {
+    display: inline-block;
+    height: 10em;
+    width: 10em;
+    border: 2px solid;
+}*/
+
+div.imagetiles div.col-lg-3.col-md-3.col-sm-3.col-xs-6{
+padding: 0px;
+}

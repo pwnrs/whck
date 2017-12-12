@@ -61,27 +61,18 @@ def home():
 def yelp():
     if request.method == 'POST':
         if request.form:
-            # get form data from user input
             address = request.form['address']
             city = request.form['city']
             state = request.form['state']
             zipcode = request.form['zip']
-            # final address string
             final_add = address + ' ' + city + ' ' + state + ' ' + zipcode
-            # strip of empty spaces
             final_add = final_add.strip()
-            # send a GET request to the YELP api with the locaiton
             response = api_helper.get_food_at_location(final_add)
-            # add to database is Response from API is valid
             if response != None and response.status_code == 200:
-                # add address input by user to DB
                 add_location_to_db(final_add)
-                # parse response to json
                 final_stuff = response.json()
                 businesses = final_stuff['businesses']
-                # get top 6 businesses to display
                 top_six = get_n_businesses(6, businesses)
-                # render html page w/ jinja templating
                 return render_template('search.html', top_six=top_six, location=final_add)
             return render_template('yelp.html', top_places=get_frequent_locations(5))
         return render_template('yelp.html', top_places=get_frequent_locations(5))

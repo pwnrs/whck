@@ -68,6 +68,7 @@ def yelp():
             final_add = final_add.strip()
             response = api_helper.get_food_at_location(final_add)
             if response != None and response.status_code == 200:
+                add_location_to_db(final_add)
                 final_stuff = response.json()
                 businesses = final_stuff['businesses']
                 top_six = []
@@ -84,6 +85,10 @@ def yelp():
     else:
         return render_template('yelp.html')
 
+def add_location_to_db(address):
+    location = Location(address)
+    db.session.add(location)
+    db.session.commit()
 
 if __name__ == '__main__':
     app.run(debug=True)

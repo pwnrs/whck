@@ -82,7 +82,7 @@ def yelp():
 def get_popular(location):
     response = api_helper.get_food_at_location(location)
     if response != None and response.status_code == 200:
-        add_location_to_db(final_add)
+        add_location_to_db(location)
         final_stuff = response.json()
         businesses = final_stuff['businesses']
         top_six = get_n_businesses(6, businesses)

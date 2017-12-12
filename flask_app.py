@@ -78,6 +78,10 @@ def yelp():
         return render_template('yelp.html')
 
 
+@app.route('/get_popular', methods=['GET'])
+def get_popular(location):
+
+
 def get_n_businesses(n, businesses):
     top_six = []
     for business in businesses[:n]:

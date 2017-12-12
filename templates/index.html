@@ -19,7 +19,7 @@
                 {% for location in top_places %}
                 <tr>
                     <th scope="row">{{ loop.index }}</th>
-                    <td>{{ location[0] }}</td>
+                    <td><a href="{{url_for('get_popular', location=location[0])}}">{{ location[0] }}</a></td>
                     <td>{{ location[1] }}</td>
                 </tr>
                 {% endfor %}

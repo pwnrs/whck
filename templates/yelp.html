@@ -29,16 +29,6 @@
                     <input type="submit" class="btn btn-primary" name="" value="Find a Restaurant">
                 </form>
             </div>
-            <div class="container-fluid">
-                {% for item in top_six %}
-                <div class="container">
-                    <a href="{{ item.url }}" class="social-link" target="_blank">
-                        <img src="{{item.image_url}}" alt="{{ item.name }}" class="social-img"/>
-                        <h3 class="social-link">{{ item.name }}</h3>
-                    </a>
-                </div>
-                {% endfor %}
-            </div>
         </div>
     </center>
     </body>

@@ -65,6 +65,7 @@ def yelp():
             state = request.form['state']
             zipcode = request.form['zip']
             final_add = address + ' ' + city + ' ' + state + ' ' + zipcode
+            final_add = final_add.strip()
             print(final_add)
             final_stuff = (api_helper.get_food_at_location(final_add)).json()
             # print(final_stuff['businesses'][0])

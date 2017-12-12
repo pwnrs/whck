@@ -66,32 +66,22 @@ def yelp():
             zipcode = request.form['zip']
             final_add = address + ' ' + city + ' ' + state + ' ' + zipcode
             final_add = final_add.strip()
-            print(final_add)
-            final_stuff = (api_helper.get_food_at_location(final_add)).json()
-            # print(final_stuff['businesses'][0])
-
-            businesses = final_stuff['businesses']
-
-            i = 0
-
-            top_six = []
-            while(i < 6):
-                one_business = {}
-                print(i)
-                one_b = businesses[i]
-                one_business['name'] = one_b['name']
-                one_business['url'] = one_b['url']
-                one_business['img_url'] = one_b['image_url']
-                one_business['rating'] = one_b['rating']
-                one_business['price'] = one_b['price']
-                top_six.append(one_business)
-                i += 1
-            print(top_six)
-
-
-
-            return render_template('yelp.html', top_six=top_six)
-    else :
+            response = api_helper.get_food_at_location(final_add)
+            if response != None and response.status_code == 200:
+                final_stuff = response.json()
+                businesses = final_stuff['businesses']
+                top_six = []
+                for business in businesses[:6]:
+                    one_business = {}
+                    one_business['name'] = business['name']
+                    one_business['url'] = business['url']
+                    one_business['img_url'] = business['image_url']
+                    one_business['rating'] = business['rating']
+                    one_business['price'] = business['price']
+                    top_six.append(one_business)
+                return render_template('yelp.html', top_six=top_six)
+            return render_template('yelp.html')
+    else:
         return render_template('yelp.html')
 
 

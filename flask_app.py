@@ -24,6 +24,7 @@ app = Flask(
     static_folder="static"
 )
 
+# config for DB schematics
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
@@ -60,23 +61,32 @@ def home():
 def yelp():
     if request.method == 'POST':
         if request.form:
+            # get form data from user input
             address = request.form['address']
             city = request.form['city']
             state = request.form['state']
             zipcode = request.form['zip']
+            # final address string
             final_add = address + ' ' + city + ' ' + state + ' ' + zipcode
+            # strip of empty spaces
             final_add = final_add.strip()
+            # send a GET request to the YELP api with the locaiton
             response = api_helper.get_food_at_location(final_add)
+            # add to database is Response from API is valid
             if response != None and response.status_code == 200:
+                # add address input by user to DB
                 add_location_to_db(final_add)
+                # parse response to json
                 final_stuff = response.json()
                 businesses = final_stuff['businesses']
+                # get top 6 businesses to display
                 top_six = get_n_businesses(6, businesses)
+                # render html page w/ jinja templating
                 return render_template('yelp.html', top_six=top_six)
             return render_template('yelp.html')
+        return render_template('yelp.html')
     else:
         return render_template('yelp.html')
-
 
 @app.route('/get_popular/<location>', methods=['GET'])
 def get_popular(location):
@@ -99,11 +109,13 @@ def get_n_businesses(n, businesses):
         top_six.append(one_business)
     return top_six
 
+# helper func for adding location to DB
 def add_location_to_db(address):
     location = Location(address)
     db.session.add(location)
     db.session.commit()
 
+# get the locations with the most searches
 def get_frequent_locations(num_locations):
     locations = db.session.query(Location.location, db.func.count(Location.location).label('Searches'))\
         .group_by(Location.location)\

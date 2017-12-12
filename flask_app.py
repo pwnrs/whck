@@ -82,11 +82,11 @@ def yelp():
                 # get top 6 businesses to display
                 top_six = get_n_businesses(6, businesses)
                 # render html page w/ jinja templating
-                return render_template('yelp.html', top_six=top_six)
-            return render_template('yelp.html')
-        return render_template('yelp.html')
+                return render_template('search.html', top_six=top_six, location=final_add)
+            return render_template('yelp.html', top_places=get_frequent_locations(5))
+        return render_template('yelp.html', top_places=get_frequent_locations(5))
     else:
-        return render_template('yelp.html')
+        return render_template('yelp.html', top_places=get_frequent_locations(5))
 
 @app.route('/get_popular/<location>', methods=['GET'])
 def get_popular(location):
@@ -96,8 +96,8 @@ def get_popular(location):
         final_stuff = response.json()
         businesses = final_stuff['businesses']
         top_six = get_n_businesses(6, businesses)
-        return render_template('yelp.html', top_six=top_six)
-    return render_template('yelp.html')
+        return render_template('search.html', top_six=top_six, location=location)
+    return redirect('/yelp')
 
 def get_n_businesses(n, businesses):
     top_six = []

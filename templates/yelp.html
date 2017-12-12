@@ -4,8 +4,7 @@
     <meta charset="utf-8">
     <title>Yelp@Me</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="/static/css/main.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../static/main.css">
 </head>
 <body>
     <center>
@@ -28,6 +27,26 @@
                     </div>
                     <input type="submit" class="btn btn-primary" name="" value="Find a Restaurant">
                 </form>
+            </div>
+            <div class="container-fluid">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Location</th>
+                            <th scope="col">Searches</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for location in top_places %}
+                        <tr>
+                            <th scope="row">{{ loop.index }}</th>
+                            <td><a href="{{url_for('get_popular', location=location[0])}}">{{ location[0] }}</a></td>
+                            <td>{{ location[1] }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </center>

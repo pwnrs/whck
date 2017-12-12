@@ -54,7 +54,7 @@ def home():
         alpha=0.5,
         tick_label=df.index,
     )
-    return render_template('index.html', data=mpld3.fig_to_html(fig))
+    return render_template('index.html', data=mpld3.fig_to_html(fig), top_places=get_frequent_locations(5))
 
 @app.route('/yelp', methods=['POST', 'GET'])
 def yelp():
@@ -77,17 +77,18 @@ def yelp():
     else:
         return render_template('yelp.html')
 
+
 def get_n_businesses(n, businesses):
-    top_six = []
-    for business in businesses[:n]:
-        one_business = {}
-        one_business['name'] = business['name']
-        one_business['url'] = business['url']
-        one_business['img_url'] = business['image_url']
-        one_business['rating'] = business['rating']
-        one_business['price'] = business['price']
-        top_six.append(one_business)
-    return top_six
+    top_six = []
+    for business in businesses[:n]:
+        one_business = {}
+        one_business['name'] = business['name']
+        one_business['url'] = business['url']
+        one_business['img_url'] = business['image_url']
+        one_business['rating'] = business['rating']
+        one_business['price'] = business['price']
+        top_six.append(one_business)
+    return top_six
 
 def add_location_to_db(address):
     location = Location(address)

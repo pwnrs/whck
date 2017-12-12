@@ -12,15 +12,17 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Location</th>
-                    <th scope="col">Popularity</th>
+                    <th scope="col">Searches</th>
                 </tr>
             </thead>
             <tbody>
+                {% for location in top_places %}
                 <tr>
-                    <th scope="row">{% row_num %}</th>
-                    <td>{{ location_name }}</td>
-                    <td>{{ num_searches }}</td>
+                    <th scope="row">{{ loop.index }}</th>
+                    <td>{{ location[0] }}</td>
+                    <td>{{ location[1] }}</td>
                 </tr>
+                {% endfor %}
             </tbody>
         </table>
     </body>

@@ -1,6 +1,6 @@
 from flask import Flask
 from flask import render_template
-from flask.ext.sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 from flask import request
 from flask import redirect
 

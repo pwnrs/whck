@@ -78,9 +78,16 @@ def yelp():
         return render_template('yelp.html')
 
 
-@app.route('/get_popular', methods=['GET'])
+@app.route('/get_popular/<location>', methods=['GET'])
 def get_popular(location):
-
+    response = api_helper.get_food_at_location(location)
+    if response != None and response.status_code == 200:
+        add_location_to_db(final_add)
+        final_stuff = response.json()
+        businesses = final_stuff['businesses']
+        top_six = get_n_businesses(6, businesses)
+        return render_template('yelp.html', top_six=top_six)
+    return render_template('yelp.html')
 
 def get_n_businesses(n, businesses):
     top_six = []

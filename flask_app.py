@@ -4,6 +4,9 @@ from flask_sqlalchemy import SQLAlchemy
 from flask import request
 from flask import redirect
 
+import matplotlib
+matplotlib.use('Agg')
+
 import os
 import scrapy
 import api_helper
@@ -12,8 +15,6 @@ import psycopg2
 
 import sys                             # system module
 import pandas as pd                    # data package
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt, mpld3        # graphics module
 import numpy as np                     # foundation for Pandas
 

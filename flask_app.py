@@ -24,6 +24,7 @@ app = Flask(
     static_folder="static"
 )
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 class Location(db.Model):

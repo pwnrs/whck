@@ -40,7 +40,7 @@ class Location(db.Model):
         return '<Location %s>' % self.location
 
     def __str__(self):
-        return '<Location %s>' % self.location
+        return '%s' % self.location
 
 @app.route('/')
 def home():

@@ -82,11 +82,9 @@ def get_n_businesses(n, businesses):
     top_six = []
     for business in businesses[:n]:
         one_business = {}
-        one_business['name'] = business['name']
-        one_business['url'] = business['url']
-        one_business['img_url'] = business['image_url']
-        one_business['rating'] = business['rating']
-        one_business['price'] = business['price']
+        for key in business.keys():
+            if key in ['name', 'url', 'image_url', 'rating', 'price']:
+                one_business[key] = business[key]
         top_six.append(one_business)
     return top_six
 

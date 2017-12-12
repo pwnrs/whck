@@ -18,32 +18,34 @@ app = Flask(
     template_folder="templates",
     static_folder="static"
 )
+#
+# @app.route('/')
+# def home():
+#     top_10 = scrapy.scrap()
+#     df = pd.DataFrame.from_dict(top_10, orient='index')
+#     fig = plt.figure()
+#     plt.bar(
+#         x=np.arange(len(df.index)),
+#         height=df[0],
+#         align='center',
+#         alpha=0.5,
+#         tick_label=df.index,
+#     )
+#     return render_template('index.html', data=mpld3.fig_to_html(fig))
 
-@app.route('/')
-def home():
-    top_10 = scrapy.scrap()
-    df = pd.DataFrame.from_dict(top_10, orient='index')
-    fig = plt.figure()
-    plt.bar(
-        x=np.arange(len(df.index)),
-        height=df[0],
-        align='center',
-        alpha=0.5,
-        tick_label=df.index,
-    )
-    return render_template('index.html', data=mpld3.fig_to_html(fig))
-
-@app.route('/yelp', methods=['POST'])
+@app.route('/yelp', methods=['GET','POST'])
 def yelp():
-    if request.form:
-        address = request.form['address']
-        city = request.form['city']
-        state = request.form['state']
-        zipcode = request.form['zip']
-        print(address, city, state, zipcode)
+    if request.method == 'POST':
+        if request.form:
+            address = request.form['address']
+            city = request.form['city']
+            state = request.form['state']
+            zipcode = request.form['zip']
+            print(address, city, state, zipcode)
+            return render_template('yelp.html')
+    else :
+        return render_template('yelp.html')
 
-
-    return render_template('yelp.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

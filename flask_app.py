@@ -61,12 +61,12 @@ def home():
 def yelp():
     if request.method == 'POST':
         if request.form:
-            address = request.form['address']
-            city = request.form['city']
-            state = request.form['state']
-            zipcode = request.form['zip']
-            final_add = address + ' ' + city + ' ' + state + ' ' + zipcode
-            final_add = final_add.strip()
+            final_add = construct_address(
+                requst.form['address'],
+                request.form['city'],
+                request.form['state'],
+                request.form['zip']
+            )
             response = api_helper.get_food_at_location(final_add)
             if response != None and response.status_code == 200:
                 add_location_to_db(final_add)
@@ -89,6 +89,9 @@ def get_popular(location):
         top_six = get_n_businesses(6, businesses)
         return render_template('search.html', top_six=top_six, location=location)
     return redirect('/yelp')
+
+def construct_address(*args):
+    return ' '.join(args).strip()
 
 def get_n_businesses(n, businesses):
     top_six = []

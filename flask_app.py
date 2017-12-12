@@ -71,24 +71,36 @@ def yelp():
                 add_location_to_db(final_add)
                 final_stuff = response.json()
                 businesses = final_stuff['businesses']
-                top_six = []
-                for business in businesses[:6]:
-                    one_business = {}
-                    one_business['name'] = business['name']
-                    one_business['url'] = business['url']
-                    one_business['img_url'] = business['image_url']
-                    one_business['rating'] = business['rating']
-                    one_business['price'] = business['price']
-                    top_six.append(one_business)
+                top_six = get_n_businesses(6, businesses)
                 return render_template('yelp.html', top_six=top_six)
             return render_template('yelp.html')
     else:
         return render_template('yelp.html')
 
+def get_n_businesses(n, businesses):
+    top_six = []
+    for business in businesses[:n]:
+        one_business = {}
+        one_business['name'] = business['name']
+        one_business['url'] = business['url']
+        one_business['img_url'] = business['image_url']
+        one_business['rating'] = business['rating']
+        one_business['price'] = business['price']
+        top_six.append(one_business)
+    return top_six
+
 def add_location_to_db(address):
     location = Location(address)
     db.session.add(location)
     db.session.commit()
+
+def get_frequent_locations(num_locations):
+    locations = db.session.query(Location.location, db.func.count(Location.location).label('Searches'))\
+        .group_by(Location.location)\
+        .order_by(db.desc('Searches'))\
+        .limit(num_locations)\
+        .all()
+    return locations
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -10,7 +10,7 @@ def get_food_at_location(location):
         return None
     params['location'] = location
     resp = requests.get(base_yelp_url, params=params, headers=headers)
-    return resp['businesses']
+    return resp
 
 def invalid(value):
     return value == None or value == '' or type(value) != str

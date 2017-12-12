@@ -17,7 +17,6 @@ def scrap():
     companiez = {}
 
     for pwn in pwns:
-        companiez[pwn.find('i', 'pwnCompanyName').contents[0]] = pwn.find('span', {'class':'pwnCount'}).contents[0]
-
+        companiez[pwn.find('i', 'pwnCompanyName').contents[0]] = int("".join(pwn.find('span', {'class':'pwnCount'}).contents[0].split(',')))
 
     return companiez

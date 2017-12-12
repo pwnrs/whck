@@ -12,6 +12,8 @@ import psycopg2
 
 import sys                             # system module
 import pandas as pd                    # data package
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt, mpld3        # graphics module
 import numpy as np                     # foundation for Pandas
 

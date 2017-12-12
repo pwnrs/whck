@@ -34,9 +34,11 @@ class Location(db.Model):
     def __init__(self, location):
         self.location = location
 
-    def __rep__(self):
+    def __repr__(self):
         return '<Location %s>' % self.location
 
+    def __str__(self):
+        return '<Location %s>' % self.location
 
 @app.route('/')
 def home():

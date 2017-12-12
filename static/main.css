@@ -1,0 +1,27 @@
+.container {
+    padding: 2em;
+    margin: 0 auto;
+}
+
+.head {
+    font-size: 7em;
+}
+
+.food_section {
+    text-align: center;
+    vertical-align: top;
+    margin: 0px auto;
+    width: 100%;
+}
+
+.item_img {
+    width: 50%;
+    height: 50%;
+}
+
+.image_logo {
+    width: 250px !important;
+    height: 250px !important;
+    display: inline-block !important;
+    padding: 20px !important;
+}

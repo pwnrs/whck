@@ -62,7 +62,7 @@ def yelp():
     if request.method == 'POST':
         if request.form:
             final_add = construct_address(
-                requst.form['address'],
+                request.form['address'],
                 request.form['city'],
                 request.form['state'],
                 request.form['zip']

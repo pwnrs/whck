@@ -1,5 +1,6 @@
 from flask import Flask
 from flask import render_template
+from flask.ext.sqlalchemy import SQLAlchemy
 from flask import request
 from flask import redirect
 
@@ -19,6 +20,20 @@ app = Flask(
     template_folder="templates",
     static_folder="static"
 )
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+db = SQLAlchemy(app)
+
+class Location(db.Model):
+    """docstring for Location."""
+    id = db.Column(db.Integer, primary_key=True)
+    location = db.Column(db.Text, nullable=False)
+
+    def __init__(self, location):
+        self.location = location
+
+    def __rep__(self):
+        return '<Location %s>' % self.location
+
 
 @app.route('/')
 def home():

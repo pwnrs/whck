@@ -1,107 +1,45 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
-    <title></title>
+    <title>Yelp@Me</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="/static/css/main.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-  </head>
-  <body>
-
-      <div class="wide">
-      	<div class="col-xs-5 line"><hr></div>
-        <!--<div class="col-xs-2 logo">Logo</div>-->
-        <div class="col-xs-5 line"><hr></div>
-    </div>
-
-
-      <center>
-          <div class="container">
-              <div class="">
-                  <h1 class="display-1 head">Yelp@Me</h1>
-
-                  <h3 class="display-5">Search@Me</h3>
-                  <form method="POST" class="">
-                      <div class="form-group">
-                          <input type="text" class="form-control" name="address" value="" placeholder="address">
-                      </div>
-
-                      <div class="form-group">
-                          <input type="text" class="form-control" name="city" value="" placeholder="city">
-                      </div>
-
-                      <div class="form-group">
-                          <input type="text" class="form-control" name="state" value="" placeholder="state" required>
-                      </div>
-
+</head>
+<body>
+    <center>
+        <div class="container">
+            <div class="">
+                <h1 class="display-1 head">Yelp@Me</h1>
+                <h3 class="display-5">Search@Me</h3>
+                <form method="POST" class="">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="address" value="" placeholder="address">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="city" value="" placeholder="city">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="state" value="" placeholder="state" required>
+                    </div>
                     <div class="form-group">
                         <input type="text" class="form-control" name="zip" value="" placeholder="zip">
                     </div>
-
-
                     <input type="submit" class="btn btn-primary" name="" value="Find a Restaurant">
-                  </form>
-
-              </div>
-<!--
-
-              <div class="grid_container">
-
-                  {% for item in top_six %}
-                  <div class="box">
-                      <div class="col-md-4 border">
-                          <a href={{ item.url }}><img class="img-responsive size" src="{{item.img_url}}"></a>
-                          <div class="caption center-block">{{ item.name }}</div>
-                      </div>
-                  </div>
-                  {% endfor %}
-              </div> -->
-
-              <div class="container-fluid">
-            {% for item in top_six %}
+                </form>
+            </div>
+            <div class="container-fluid">
+                {% for item in top_six %}
                 <div class="container">
                     <a href="{{ item.url }}" class="social-link" target="_blank">
-                        <img src="{{item.img_url}}" alt="{{ item.name }}" class="social-img"/>
+                        <img src="{{item.image_url}}" alt="{{ item.name }}" class="social-img"/>
                         <h3 class="social-link">{{ item.name }}</h3>
                     </a>
                 </div>
-            {% endfor %}
-        </div>
-
-
-              <!-- <div class="grid_container">
-                  {% for item in top_six %}
-                  <div class="row imagetiles">
-
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
-                            {% for item in top_six %}
-                           <a href={{ item.url }}>
-                            <img src="{{item.img_url}}" class="img-responsive">
-                            <div class="caption center-block">{{ item.name }}</div>
-                            </a>
-                        {% endfor %}
-                        </div>
-
-                     </div>
-
-                      {% endfor %}
-                </div> -->
-
-
-
-              <!-- <div class="grid_container">
-                 {% for item in top_six %}
-                 <div class="box">
-                     <img src="{{item.img_url}}" class="img-thumbnail rounded mx-auto d-block" alt="">
-                     <a href="{{ item.url }}">{{ item.name }}</a>
-                 </div>
                 {% endfor %}
-          </div> -->
-
-      </center>
-
-
-
-  </body>
-</html>
+            </div>
+        </div>
+    </center>
+    </body>
+    </html>

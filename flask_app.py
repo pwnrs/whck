@@ -55,64 +55,59 @@ def home():
         alpha=0.5,
         tick_label=df.index,
     )
-    return render_template('index.html', data=mpld3.fig_to_html(fig))
+    return render_template('index.html', data=mpld3.fig_to_html(fig), top_places=get_frequent_locations(5))
 
 @app.route('/yelp', methods=['POST', 'GET'])
 def yelp():
     if request.method == 'POST':
         if request.form:
-
             # get form data from user input
             address = request.form['address']
             city = request.form['city']
             state = request.form['state']
             zipcode = request.form['zip']
-
             # final address string
             final_add = address + ' ' + city + ' ' + state + ' ' + zipcode
-
             # strip of empty spaces
             final_add = final_add.strip()
-
             # send a GET request to the YELP api with the locaiton
             response = api_helper.get_food_at_location(final_add)
-
             # add to database is Response from API is valid
             if response != None and response.status_code == 200:
-
                 # add address input by user to DB
                 add_location_to_db(final_add)
-
                 # parse response to json
                 final_stuff = response.json()
                 businesses = final_stuff['businesses']
-
                 # get top 6 businesses to display
                 top_six = get_n_businesses(6, businesses)
-
                 # render html page w/ jinja templating
                 return render_template('yelp.html', top_six=top_six)
             return render_template('yelp.html')
+        return render_template('yelp.html')
     else:
         return render_template('yelp.html')
 
+@app.route('/get_popular/<location>', methods=['GET'])
+def get_popular(location):
+    response = api_helper.get_food_at_location(location)
+    if response != None and response.status_code == 200:
+        add_location_to_db(location)
+        final_stuff = response.json()
+        businesses = final_stuff['businesses']
+        top_six = get_n_businesses(6, businesses)
+        return render_template('yelp.html', top_six=top_six)
+    return render_template('yelp.html')
 
-# helper function for getting n business from YELP response
 def get_n_businesses(n, businesses):
-    # array storage for businesses
-    top_n = []
-
-    for business in businesses[:n]:
-        one_business = {}
-        one_business['name'] = business['name']
-        one_business['url'] = business['url']
-        one_business['img_url'] = business['image_url']
-        one_business['rating'] = business['rating']
-        one_business['price'] = business['price']
-        top_six.append(one_business)
-
-    # return array of businesses
-    return top_n
+    top_six = []
+    for business in businesses[:n]:
+        one_business = {}
+        for key in business.keys():
+            if key in ['name', 'url', 'image_url', 'rating', 'price']:
+                one_business[key] = business[key]
+        top_six.append(one_business)
+    return top_six
 
 # helper func for adding location to DB
 def add_location_to_db(address):

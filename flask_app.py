@@ -5,6 +5,7 @@ from flask import redirect
 
 import os
 import scrapy
+import api_helper
 import urllib.parse as urlparse
 import psycopg2
 

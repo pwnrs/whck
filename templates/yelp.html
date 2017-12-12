@@ -44,10 +44,61 @@
                   </form>
 
               </div>
+<!--
+
+              <div class="grid_container">
+
+                  {% for item in top_six %}
+                  <div class="box">
+                      <div class="col-md-4 border">
+                          <a href={{ item.url }}><img class="img-responsive size" src="{{item.img_url}}"></a>
+                          <div class="caption center-block">{{ item.name }}</div>
+                      </div>
+                  </div>
+                  {% endfor %}
+              </div> -->
+
+              <div class="container-fluid">
+            {% for item in top_six %}
+                <div class="container">
+                    <a href="{{ item.url }}" class="social-link" target="_blank">
+                        <img src="{{item.img_url}}" alt="{{ item.name }}" class="social-img"/>
+                        <h3 class="social-link">{{ item.name }}</h3>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+
+
+              <!-- <div class="grid_container">
+                  {% for item in top_six %}
+                  <div class="row imagetiles">
+
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                            {% for item in top_six %}
+                           <a href={{ item.url }}>
+                            <img src="{{item.img_url}}" class="img-responsive">
+                            <div class="caption center-block">{{ item.name }}</div>
+                            </a>
+                        {% endfor %}
+                        </div>
+
+                     </div>
+
+                      {% endfor %}
+                </div> -->
 
 
 
-          </div>
+              <!-- <div class="grid_container">
+                 {% for item in top_six %}
+                 <div class="box">
+                     <img src="{{item.img_url}}" class="img-thumbnail rounded mx-auto d-block" alt="">
+                     <a href="{{ item.url }}">{{ item.name }}</a>
+                 </div>
+                {% endfor %}
+          </div> -->
+
       </center>
 
 

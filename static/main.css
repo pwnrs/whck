@@ -9,7 +9,6 @@
 
 .food_section {
     text-align: center;
-    vertical-align: top;
     margin: 0px auto;
     width: 100%;
 }
@@ -23,5 +22,6 @@
     width: 250px !important;
     height: 250px !important;
     display: inline-block !important;
+    vertical-align: top !important;
     padding: 20px !important;
 }

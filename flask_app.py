@@ -1,10 +1,12 @@
 from flask import Flask
 from flask import render_template
+from flask_sqlalchemy import SQLAlchemy
 from flask import request
 from flask import redirect
 
 import os
 import scrapy
+import api_helper
 import urllib.parse as urlparse
 import psycopg2
 
@@ -18,22 +20,37 @@ app = Flask(
     template_folder="templates",
     static_folder="static"
 )
-#
-# @app.route('/')
-# def home():
-#     top_10 = scrapy.scrap()
-#     df = pd.DataFrame.from_dict(top_10, orient='index')
-#     fig = plt.figure()
-#     plt.bar(
-#         x=np.arange(len(df.index)),
-#         height=df[0],
-#         align='center',
-#         alpha=0.5,
-#         tick_label=df.index,
-#     )
-#     return render_template('index.html', data=mpld3.fig_to_html(fig))
 
-@app.route('/yelp', methods=['GET','POST'])
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+db = SQLAlchemy(app)
+
+class Location(db.Model):
+    """docstring for Location."""
+    id = db.Column(db.Integer, primary_key=True)
+    location = db.Column(db.Text, nullable=False)
+
+    def __init__(self, location):
+        self.location = location
+
+    def __rep__(self):
+        return '<Location %s>' % self.location
+
+
+@app.route('/')
+def home():
+    top_10 = scrapy.scrap()
+    df = pd.DataFrame.from_dict(top_10, orient='index')
+    fig = plt.figure()
+    plt.bar(
+        x=np.arange(len(df.index)),
+        height=df[0],
+        align='center',
+        alpha=0.5,
+        tick_label=df.index,
+    )
+    return render_template('index.html', data=mpld3.fig_to_html(fig))
+
+@app.route('/yelp', methods=['POST'])
 def yelp():
     if request.method == 'POST':
         if request.form:

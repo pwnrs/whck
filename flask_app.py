@@ -85,6 +85,7 @@ def yelp():
 def get_popular(location):
     response = api_helper.get_food_at_location(location)
     if response != None and response.status_code == 200:
+        print(get_location_trend(location))
         add_location_to_db(location)
         final_stuff = response.json()
         businesses = final_stuff['businesses']
@@ -119,6 +120,13 @@ def get_frequent_locations(num_locations):
         .limit(num_locations)\
         .all()
     return locations
+
+def get_location_trend(location):
+    location_trends = db.session.query(Location.location, Location.created_at.label('Date'), db.func.count(Location.created_at).label('Searches'))\
+        .filter(Location.location == location)\
+        .group_by(Location.location, Location.created_at)\
+        .all()
+    return location_trends
 
 if __name__ == '__main__':
     app.run(debug=True)

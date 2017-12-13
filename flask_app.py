@@ -87,7 +87,6 @@ def get_popular(location):
     if response != None and response.status_code == 200:
         add_location_to_db(location)
         df = get_search_trend_vis(location)
-        fig = plt.figure()
         fig, ax = plt.subplots()
         ax.plot(
             df['index'].map(lambda x: x.strftime('%Y-%m-%d')).tolist(),

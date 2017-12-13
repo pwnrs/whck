@@ -72,10 +72,25 @@ def yelp():
             response = api_helper.get_food_at_location(final_add)
             if response != None and response.status_code == 200:
                 add_location_to_db(final_add)
+                df = get_search_trend_vis(final_add)
+                fig, (ax0, ax1) = plt.subplots(1, 2, figsize=(10, 5))
+                ax0.plot(
+                    df['index'].map(lambda x: x.strftime('%Y-%m-%d')).tolist(),
+                    df[0].tolist(),
+                    linestyle='None',
+                    marker='o'
+                )
+                ax0.set_title('Searches for this location')
                 final_stuff = response.json()
                 businesses = final_stuff['businesses']
+                ax1.hist(
+                    x=get_all_ratings(businesses),
+                    bins=30,
+                    histtype='stepfilled'
+                )
+                ax1.set_title('Restaurant ratings at this location')
                 top_six = get_n_businesses(6, businesses)
-                return render_template('search.html', top_six=top_six, location=final_add)
+                return render_template('search.html', top_six=top_six, location=final_add, data=mpld3.fig_to_html(fig))
             return render_template('yelp.html', top_places=get_frequent_locations(5))
         return render_template('yelp.html', top_places=get_frequent_locations(5))
     else:

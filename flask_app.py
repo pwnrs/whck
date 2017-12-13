@@ -87,15 +87,22 @@ def get_popular(location):
     if response != None and response.status_code == 200:
         add_location_to_db(location)
         df = get_search_trend_vis(location)
-        fig, ax = plt.subplots()
-        ax.plot(
+        fig, (ax0, ax1) = plt.subplots(1, 2, figsize=(10, 5))
+        ax0.plot(
             df['index'].map(lambda x: x.strftime('%Y-%m-%d')).tolist(),
             df[0].tolist(),
             linestyle='None',
             marker='o'
         )
+        ax0.set_title('Searches for this location')
         final_stuff = response.json()
         businesses = final_stuff['businesses']
+        ax1.hist(
+            x=get_all_ratings(businesses),
+            bins=30,
+            histtype='stepfilled'
+        )
+        ax1.set_title('Restaurant ratings at this location')
         top_six = get_n_businesses(6, businesses)
         return render_template('search.html', top_six=top_six, location=location, data=mpld3.fig_to_html(fig))
     return redirect('/yelp')
@@ -112,6 +119,10 @@ def get_n_businesses(n, businesses):
                 one_business[key] = business[key]
         top_six.append(one_business)
     return top_six
+
+def get_all_ratings(businesses):
+    return [business.get('rating') for business in businesses if business.get('rating') != None]
+
 
 # helper func for adding location to DB
 def add_location_to_db(address):

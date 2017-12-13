@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import render_template
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime as dt
 from flask import request
 from flask import redirect
 
@@ -33,6 +34,7 @@ class Location(db.Model):
     """docstring for Location."""
     id = db.Column(db.Integer, primary_key=True)
     location = db.Column(db.Text, nullable=False)
+    created_at = db.Column(db.DateTime, nullable=False, default=dt.utcnow())
 
     def __init__(self, location):
         self.location = location

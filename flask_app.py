@@ -47,17 +47,7 @@ class Location(db.Model):
 
 @app.route('/')
 def home():
-    top_10 = scrapy.scrap()
-    df = pd.DataFrame.from_dict(top_10, orient='index')
-    fig = plt.figure()
-    plt.bar(
-        x=np.arange(len(df.index)),
-        height=df[0],
-        align='center',
-        alpha=0.5,
-        tick_label=df.index,
-    )
-    return render_template('index.html', data=mpld3.fig_to_html(fig), top_places=get_frequent_locations(5))
+    return redirect('/yelp')
 
 @app.route('/yelp', methods=['POST', 'GET'])
 def yelp():

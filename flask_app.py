@@ -85,12 +85,20 @@ def yelp():
 def get_popular(location):
     response = api_helper.get_food_at_location(location)
     if response != None and response.status_code == 200:
-        print(get_location_trend(location))
         add_location_to_db(location)
+        df = get_search_trend_vis(location)
+        fig = plt.figure()
+        fig, ax = plt.subplots()
+        ax.plot(
+            df['index'].map(lambda x: x.strftime('%Y-%m-%d')).tolist(),
+            df[0].tolist(),
+            linestyle='None',
+            marker='o'
+        )
         final_stuff = response.json()
         businesses = final_stuff['businesses']
         top_six = get_n_businesses(6, businesses)
-        return render_template('search.html', top_six=top_six, location=location)
+        return render_template('search.html', top_six=top_six, location=location, data=mpld3.fig_to_html(fig))
     return redirect('/yelp')
 
 def construct_address(*args):
@@ -122,11 +130,20 @@ def get_frequent_locations(num_locations):
     return locations
 
 def get_location_trend(location):
-    location_trends = db.session.query(Location.location, Location.created_at.label('Date'), db.func.count(Location.created_at).label('Searches'))\
+    location_trends = db.session.query(db.func.DATE(Location.created_at).label('Date'), db.func.count(db.func.DATE(Location.created_at)).label('Searches'))\
         .filter(Location.location == location)\
-        .group_by(Location.location, Location.created_at)\
+        .group_by(db.func.DATE(Location.created_at))\
         .all()
     return location_trends
+
+def get_search_trend_vis(location):
+    location_trends = get_location_trend(location)
+    before_df = {}
+    for data in location_trends:
+        before_df[data[0]] = data[1]
+    df = pd.DataFrame.from_dict(before_df, orient='index')
+    df = df.reset_index()
+    return df
 
 if __name__ == '__main__':
     app.run(debug=True)

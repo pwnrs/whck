@@ -102,6 +102,7 @@ def get_popular(location):
         ax0.set_title('Searches for this location')
         final_stuff = response.json()
         businesses = final_stuff['businesses']
+        get_normal_scores(businesses)
         ax1.hist(
             x=get_all_ratings(businesses),
             bins=30,
@@ -128,6 +129,18 @@ def get_n_businesses(n, businesses):
 def get_all_ratings(businesses):
     return [business.get('rating') for business in businesses if business.get('rating') != None]
 
+def get_normal_scores(businesses):
+    raw_data = {}
+    for business in businesses:
+        columns = [business.get('price'), business.get('rating'), business.get('review_count')]
+        if None not in columns:
+            columns[0] = len(columns[0])
+            raw_data[business.get('name')] = columns
+    df = pd.DataFrame.from_dict(raw_data, orient='index')
+    normal = (df - df.min()) / (df.max() - df.min())
+    normal['score'] = normal[0] + normal[1] + normal[2]
+    top_places = normal.nlargest(6, 'score')
+    return top_places
 
 # helper func for adding location to DB
 def add_location_to_db(address):

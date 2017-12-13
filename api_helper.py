@@ -3,7 +3,7 @@ import requests
 
 base_yelp_url = 'https://api.yelp.com/v3/businesses/search?'
 headers = {'Authorization': 'Bearer ' + os.environ['YELP_API_KEY']}
-params = {'term': 'food'}
+params = {'term': 'food', 'limit': 50}
 
 def get_food_at_location(location):
     if invalid(location):

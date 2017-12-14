@@ -1,4 +1,5 @@
 venv
 *.pyc
-*ipynb*
+.ipynb_checkpoints
 .DS_Store
+test_notebook.ipynb
